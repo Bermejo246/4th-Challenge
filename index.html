@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./style.css" rel="stylesheet">
+     <title>Coding Quiz</title>
+</head>
+
+<header>
+      <aside id="countdown-clock" class=" "></aside>
+</header>
+
+<body>
+  <section class="container">
+    <section id="welcome" class=""><h1>The Coding Quiz!</h1>
+      <p>Answer the questions to the best of your ability. The wrong answers will reduce your time, good luck!</p>
+    </section>
+    <section id="question-section" class="hidden">
+       <section id="question"><h1></h1></section>
+       <section id="answer-buttons" class="button-grid ">
+        <button id="answer1" class = "btn answer"></button>
+        <button id="answer2" class = "btn answer"></button>
+        <button id="answer3" class = "btn answer"></button>
+        <button id="answer4" class = "btn answer"></button>
+        </section>
+          <section id="response"></section>
+    </section>
+  <section id="control-button-container">
+        <button id="start-button" class="btn">Begin</button>
+        <button id="score-button" class="btn hidden">View High Scores</button>
+  </section>
+ </section>
+ <section id="form" class="hidden">
+  <form action="" method="get">
+    <label for="initials">Initials:</label>
+    <input type="text" id="initials" name="initials"><br><br>
+    <input type="submit" id="submit" value="Submit">
+  </form>
+  <section id="scoresList" class="hidden">
+    <h3>Your Score</h3>
+    <ol class="scoreboard">
+    </0l>
+  </section>
+</section>
+</body>
+</html>
+
+<script src="./script.js"></script>
