@@ -5,46 +5,58 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./style.css" rel="stylesheet">
-     <title>Coding Quiz</title>
+     <title>The Quiz</title>
 </head>
 
 <header>
       <aside id="countdown-clock" class=" "></aside>
+      <button id="highscore-button">
+        High Scores
+      </button>
+      <div class="row">
+        <p>Time:</p>
+        <p id="timer">60</p>
+      </div>
 </header>
 
-<body>
+<main>
   <section class="container">
-    <section id="welcome" class=""><h1>The Coding Quiz!</h1>
-      <p>Answer the questions to the best of your ability. The wrong answers will reduce your time, good luck!</p>
+    <section id="welcome" class=""><h1>The Quiz</h1>
+      <p>Good luck!</p>
     </section>
     <section id="question-section" class="hidden">
        <section id="question"><h1></h1></section>
        <section id="answer-buttons" class="button-grid ">
-        <button id="answer1" class = "btn answer"></button>
-        <button id="answer2" class = "btn answer"></button>
-        <button id="answer3" class = "btn answer"></button>
-        <button id="answer4" class = "btn answer"></button>
-        </section>
-          <section id="response"></section>
+        <button id="a1" class = "btn answer">answer1</button>
+        <button id="a2" class = "btn answer">answer2</button>
+        <button id="a3" class = "btn answer">answer3</button>
+        <button id="a4" class = "btn answer">answer4</button>
+        <button id="a5" class = "btn answer">answer5</button>
+        <button id="a6" class = "btn answer">answer6</button>
+        <h1 id="results"></h1></h1>  
     </section>
+         
   <section id="control-button-container">
         <button id="start-button" class="btn">Begin</button>
         <button id="score-button" class="btn hidden">View High Scores</button>
-  </section>
+        <buttton id="restart" class="btn">restart</buttton>
+    </section>
  </section>
  <section id="form" class="hidden">
   <form action="" method="get">
-    <label for="initials">Initials:</label>
-    <input type="text" id="initials" name="initials"><br><br>
-    <input type="submit" id="submit" value="Submit">
+    <label for="name-input">Name:</label>
+    <input type="text" id="name-input" name="name-input"><br><br>
+    <input type="submit" id="name-submit" value="submit">
   </form>
+
   <section id="scoresList" class="hidden">
     <h3>Your Score</h3>
     <ol class="scoreboard">
     </0l>
   </section>
 </section>
-</body>
+
+</main>
 </html>
 
 <script src="./script.js"></script>

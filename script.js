@@ -1,210 +1,170 @@
-// set variables for DOM manipulation 
+var header = document.querySelector(".header");
+var container = document.querySelector(".container");
+var result = document.querySelector(".result");
+var time = document.querySelector('#timer');
+var startButton = document.querySelector('#start-button');
+var submit = document.querySelecror('#name-submit');
+var nameInput = document.querySelector('#name-input');
+var scoreButton = document.querySelector('#score-button');
+var highscoreButton = document.querySelector('#highscore-button');
 
-const startButton = document.getElementById('start-button')
-const answerButtonsElement = document.getElementById('answer-buttons')
-const welcomeElement = document.getElementById('welcome')
-const formElement = document.getElementById('form')
-const questionSectionElement = document.getElementById('question-section')
-let questionElement = document.getElementById('question')
-
-let answer1Element = document.getElementById('answer1')
-let answer2Element = document.getElementById('answer2')
-let answer3Element = document.getElementById('answer3')
-let answer4Element = document.getElementById('answer4')
-
-let scoreButton = document.getElementById('score-button')
-let scoresList = document.getElementById('scoresList')
-let response = document.getElementById('response')
-
-
-
-//set score to zero
-
-let score = 0
-scoreButton.textContent = score
-
-
-//set countdown and conditions for time changes
-
-let countdownClock = document.getElementById('countdown-clock')
-let secondsLeft = 60;
-
-function countdown() {
-  let timerInterval = setInterval(function() {
-    secondsLeft--;
-    countdownClock.innerHTML = secondsLeft + " seconds remain";
-    if (secondsLeft <=0 ) {
-    endPage();
+const questionsAr = [
+    {
+        question: "Inside which HTML element do we put JavaScript?",
+        options: {
+            a: "JavaScript", 
+            b: "JavaScripting", 
+            c: "Script", 
+            d: "Scripting",
+        },
+        answer: "c"
+    },
+    {
+        question: "",
+        options: {
+            a: "", 
+            b: "", 
+            c: "", 
+            d: "",
+        },
+        answer: ""
+    },
+    {
+        question: "",
+        options: {
+            a: "", 
+            b: "", 
+            c: "", 
+            d: "",
+        },
+        answer: ""
+    },
+    {
+        question: "How do you write Hello World in an alert box?",
+        options: {
+            a: "'alert(Hello-World);'", 
+            b: "'alertbox(Hello-World);'", 
+            c: "'(Hello-World);'", 
+            d: "'msgbox(Hello-World);'", 
+        },
+        answer: "a"
+    },
+    {
+        question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+        options: {
+            a: "JavaScript", 
+            b: "terminal/bash", 
+            c: "for loops", 
+            d: "console.log",            
+        },
+        answer: "d"
     }
-  }, 1000);
+];
+
+
+var scores = [];
+var points = 0;
+var index = 0;
+var record = [];
+
+function start() {
+    
+    var restart = container;
+    while(restart.hasChildNodes()) {
+        restart.removeChild(restart.firstChild);
+    };
+
+    
+    var viewScore = document.createElement("p");
+    viewScore.classList.add("banner", "high-score");
+    viewScore.textContent = "High Scores";
+
+    
+    var time = document.createElement("p");
+    time.classList.add("banner", "time");
+    time.textContent = "Time Remaining: ";
+    var second = document.createElement("span");
+    second.setAttribute('id', "second");
+    time.appendChild(second);
+
+    
+    var title = document.createElement("h1");
+    title.classList.add("title");
+    title.textContent = "Challenge Four Quiz";
+
+    
+    var text = document.createElement("p");
+    text.classList.add("text");
+    text.textContent = "Please take the following coding quiz. Correct answer = 1 point; Wrong answer = -10 seconds";
+    
+    var startBtn = document.createElement("button");
+    startBtn.classList.add("btn", "btn-start");
+    startBtn.textContent = "Start Quiz";
+
+    header.appendChild(viewScore);
+    header.appendChild(time);
+    container.appendChild(title);
+    container.appendChild(text);
+    container.appendChild(startBtn);
+
+    
+    document.querySelector(".btn-start").addEventListener("click", timer);
+    document.querySelector(".high-score").addEventListener("click", viewHighScore);
+}
+function timer() {
+
+    var timeRemain = 60;
+
+    var timeInterval = setInterval(function() {
+
+        var timeEl = document.querySelector("#second");
+        timeEl.textContent = timeRemain + "s";
+        timeRemain--;
+
+        if (result.textContent.match(/wrong/gi)) {
+            timeRemain -= 10; 
+        }
+
+        if (timeRemain < 0 || scores.length === questionsAr.length) {
+
+            clearInterval(timeInterval);
+            timeEl.textContent = 0;
+            index += questionsAr.length;
+
+            quiz();
+        }
+    }, 1000);
+
+    quiz();
 }
 
 
-// Define questions to iterate through
 
-let questionsList = [
-    {
-  question: 'We use ____ to check if our local GitHub file is up to Date.',
-  answers: {
-  answer1: 'Git stash',
-  answer2: 'Mkdir',
-  answer3: 'Git status',
-  answer4: 'Git commit'},
-  correct: 'Git status',
-},
-    {
-    question: 'The condition of an if/else statement is enclosed with: ',
-    answers: {
-    answer1: 'Curly braces',
-    answer2: 'Parentheses',
-    answer3: 'Backticks',
-    answer4: 'Brackets'},
-    correct: 'Parentheses',
-},
-    {
-    question: 'Using JavaScript, what can arrays store? ',
-    answers: {
-    answer1: 'Numbers & strings',
-    answer2: 'Other arrays',
-    answer3: 'Booleans',
-    answer4: 'All of the above'},
-    correct: 'All of the above',
-} ,
-{
-  question: 'String values must be enclosed with _________ when being assigned to variables.',
-  answers: {
-  answer1: 'Semicolons',
-  answer2: 'Brackets',
-  answer3: 'Quotes',
-  answer4: 'Commas'},
-  correct: 'Quotes',
-},
-{
-  question: 'Commonly used data types do NOT include: ',
-  answers: {
-  answer1: 'Alerts',
-  answer2: 'Booleans',
-  answer3: 'Numbers',
-  answer4: 'Strings'},
-  correct: 'Alerts',
-} 
-]
+function recordHighScore(event) {
 
-let questionCounter = 0 
-
-
-// Initialize game
-
-function startGame() {
-    startButton.setAttribute('class', 'hidden');
-    welcomeElement.children[0].setAttribute('class', 'hidden');
-    welcomeElement.children[1].setAttribute('class', 'hidden');
-    questionSectionElement.setAttribute('class', 'hidden');
-    questionSectionElement.classList.remove('hidden');
-    countdown();
-    setNextQuestion();
+    event.preventDefault();
 }
 
-startButton.addEventListener('click', startGame)
+    loadData();
 
+    var goBack = document.createElement("button");
 
-// Function to loop through the next question based on conditions
+function loadData() {
 
-function setNextQuestion () {
-  const currentQuestion = questionsList[questionCounter] 
- 
-  if (!currentQuestion) {
-    secondsLeft===0;
-    endPage();
+    var load = localStorage.getItem("high scores");
 
-  } else {
-    let title = currentQuestion.question;
-    questionElement.children[0].textContent = title;
-    var choiceOption = currentQuestion.answers
-    var choice1 = choiceOption['answer1'];
-    var choice2 = choiceOption['answer2'];
-    var choice3 = choiceOption['answer3'];
-    var choice4 = choiceOption['answer4'];
-    answer1Element.textContent = choice1;
-      answer1Element.setAttribute('value', choice1);
-    answer2Element.textContent = choice2;
-      answer2Element.setAttribute('value', choice2);
-    answer3Element.textContent = choice3;
-      answer3Element.setAttribute('value', choice3);
-    answer4Element.textContent = choice4;
-      answer4Element.setAttribute('value', choice4);  
+    if (!load) {
+        return false;
+    }
+
+    load = JSON.parse(load);
+
+    for (var i = 0; i < load.length; i++) {
+        var highScorestext = document.createElement("li");
+        highScorestext.classList.add("list", "text");
+        highScorestext.textContent = load[i].name + " : " + load[i].highScore;
+        container.appendChild(highScorestext);
     }
 }
 
-
-// Listen for user input/clicks
-
-answer1Element.addEventListener('click', checkAnswer)
-answer2Element.addEventListener('click', checkAnswer)
-answer3Element.addEventListener('click', checkAnswer)
-answer4Element.addEventListener('click', checkAnswer)
-
-
-// Check user choice against correct answer
-
-function checkAnswer(event) {
-  response.textContent = " "
-  const currentQuestion = questionsList[questionCounter] 
-  const selectedButton = event.target;
-  console.log(event.target.textContent);
-  const isCorrect = event.target.textContent === currentQuestion.correct; 
-  if (isCorrect) { 
-  score++;
-  console.log(score)
-  questionCounter++;
-  response.textContent = 'Correct!'
-  console.log(questionCounter);
-  setNextQuestion();
-  }
-  else {
-  secondsLeft -= 15;
-  response.textContent = 'Try again!';
-  }
-}
-
-
-// When time is up or questions are all answered (whichever comes first), display score and request intitials
-
-function endPage() {
-  answerButtonsElement.setAttribute('class', 'hidden')
-  countdownClock.textContent = 'Time is up!';
-  countdownClock.setAttribute('class', 'hidden');
-  questionSectionElement.textContent = `Done! \nFinal score is ${score} out of 5.`
-  formElement.setAttribute('class', ' ');
-} 
-submitButton = document.querySelector('#submit');
-scoresList.setAttribute('class', ' ');
-scoreboard = document.querySelector('.scoreboard')
-
-
-/// Set and retreive scores to the local storage 
-// Currently, the function logs the score and initials in local storage, but
-// does not successfully render the scores to the page
-
-function renderLastScores() {
-  var initials = localStorage.getItem('initials');
-  var score = localStorage.getItem('score');
-  formElement.setAttribute('class', 'hidden');
-  scoresList.classList.remove('hidden');
-
-  const li1 = document.createElement('li');
-  li1.textContent = `Intials: ${initials} | Score: ${score}`;
-  console.log(li1);
-  scoreboard.appendChild(li1)
-  console.log(scoreboard);
-
-}
-submitButton.addEventListener('click', function(event) {
-  event.preventDefault();
-  var initials = document.querySelector('#initials').value;
-  localStorage.setItem('initials', initials);
-  localStorage.setItem('score', score);
-  
-  renderLastScores();
-})
-
+start();
