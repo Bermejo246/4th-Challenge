@@ -12,52 +12,52 @@ const questionsAr = [
     {
         question: "Inside which HTML element do we put JavaScript?",
         options: {
-            a: "JavaScript", 
-            b: "JavaScripting", 
-            c: "Script", 
-            d: "Scripting",
+            A: "JavaScript", 
+            B: "JavaScripting", 
+            C: "Script", 
+            D: "Scripting",
         },
-        answer: "c"
+        answer: "C"
+    },
+    {
+        question: "What file describes what is being developed in VS Code?",
+        options: {
+            A: "README.MD",
+            B: "README.HTML", 
+            C: "READEME.JS", 
+            D: "READEME.CSS",
+        },
+        answer: "A"
     },
     {
         question: "",
         options: {
-            a: "", 
-            b: "", 
-            c: "", 
-            d: "",
-        },
-        answer: ""
-    },
-    {
-        question: "",
-        options: {
-            a: "", 
-            b: "", 
-            c: "", 
-            d: "",
+            A: "", 
+            B: "", 
+            C: "", 
+            D: "",
         },
         answer: ""
     },
     {
         question: "How do you write Hello World in an alert box?",
         options: {
-            a: "'alert(Hello-World);'", 
-            b: "'alertbox(Hello-World);'", 
-            c: "'(Hello-World);'", 
-            d: "'msgbox(Hello-World);'", 
+            A: "'alert(Hello-World);'", 
+            B: "'alertbox(Hello-World);'", 
+            C: "'(Hello-World);'", 
+            D: "'msgbox(Hello-World);'", 
         },
-        answer: "a"
+        answer: "A"
     },
     {
         question: "A very useful tool used during development and debugging for printing content to the debugger is:",
         options: {
-            a: "JavaScript", 
-            b: "terminal/bash", 
-            c: "for loops", 
-            d: "console.log",            
+            A: "JavaScript", 
+            B: "terminal/bash", 
+            C: "for loops", 
+            D: "console.log",            
         },
-        answer: "d"
+        answer: "D"
     }
 ];
 
